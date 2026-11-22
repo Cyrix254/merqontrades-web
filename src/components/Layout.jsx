@@ -21,6 +21,12 @@ export default function Layout() {
           <Button component={NavLink} to="/" end sx={navSx}>
             Dashboard
           </Button>
+          <Button component={NavLink} to="/sales/new" sx={navSx}>
+            New sale
+          </Button>
+          <Button component={NavLink} to="/sales" end sx={navSx}>
+            Sales
+          </Button>
           <Button component={NavLink} to="/products" sx={navSx}>
             Products
           </Button>
