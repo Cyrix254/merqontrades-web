@@ -6,6 +6,7 @@ import Login from "./pages/Login";
 import Dashboard from "./pages/Dashboard";
 import Products from "./pages/Products";
 import Categories from "./pages/Categories";
+import Stock from "./pages/Stock";
 
 function ProtectedRoute({ children }) {
   const { user, loading } = useAuth();
@@ -17,6 +18,11 @@ function ProtectedRoute({ children }) {
     );
   }
   return user ? children : <Navigate to="/login" replace />;
+}
+
+function AdminRoute({ children }) {
+  const { user } = useAuth();
+  return user.role === "admin" ? children : <Navigate to="/" replace />;
 }
 
 export default function App() {
@@ -33,6 +39,14 @@ export default function App() {
         <Route index element={<Dashboard />} />
         <Route path="products" element={<Products />} />
         <Route path="categories" element={<Categories />} />
+        <Route
+          path="stock"
+          element={
+            <AdminRoute>
+              <Stock />
+            </AdminRoute>
+          }
+        />
       </Route>
       <Route path="*" element={<Navigate to="/" replace />} />
     </Routes>

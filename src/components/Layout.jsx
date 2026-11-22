@@ -27,6 +27,11 @@ export default function Layout() {
           <Button component={NavLink} to="/categories" sx={navSx}>
             Categories
           </Button>
+          {user.role === "admin" && (
+            <Button component={NavLink} to="/stock" sx={navSx}>
+              Stock
+            </Button>
+          )}
           <Box sx={{ flexGrow: 1 }} />
           <Chip
             label={`${user.name} (${user.role})`}
