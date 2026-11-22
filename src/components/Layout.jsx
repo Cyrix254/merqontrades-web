@@ -10,6 +10,7 @@ const navSx = {
 
 export default function Layout() {
   const { user, logout } = useAuth();
+  const isAdmin = user.role === "admin";
 
   return (
     <>
@@ -33,9 +34,14 @@ export default function Layout() {
           <Button component={NavLink} to="/categories" sx={navSx}>
             Categories
           </Button>
-          {user.role === "admin" && (
+          {isAdmin && (
             <Button component={NavLink} to="/stock" sx={navSx}>
               Stock
+            </Button>
+          )}
+          {isAdmin && (
+            <Button component={NavLink} to="/users" sx={navSx}>
+              Users
             </Button>
           )}
           <Box sx={{ flexGrow: 1 }} />

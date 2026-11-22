@@ -9,6 +9,7 @@ import Categories from "./pages/Categories";
 import Stock from "./pages/Stock";
 import NewSale from "./pages/NewSale";
 import Sales from "./pages/Sales";
+import Users from "./pages/Users";
 
 function ProtectedRoute({ children }) {
   const { user, loading } = useAuth();
@@ -48,6 +49,14 @@ export default function App() {
           element={
             <AdminRoute>
               <Stock />
+            </AdminRoute>
+          }
+        />
+        <Route
+          path="users"
+          element={
+            <AdminRoute>
+              <Users />
             </AdminRoute>
           }
         />
