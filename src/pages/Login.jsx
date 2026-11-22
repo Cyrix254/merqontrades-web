@@ -1,6 +1,8 @@
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
+import { Alert, Box, Button, Paper, TextField, Typography } from "@mui/material";
 import { useAuth } from "../auth/useAuth";
+import { getErrorMessage } from "../utils";
 
 export default function Login() {
   const { login } = useAuth();
@@ -18,43 +20,50 @@ export default function Login() {
       await login(email, password);
       navigate("/");
     } catch (err) {
-      setError(
-        err.response?.data?.message ||
-          "Could not reach the server. Is the Laravel API running?"
-      );
+      setError(getErrorMessage(err));
     } finally {
       setSubmitting(false);
     }
   };
 
   return (
-    <div className="login-page">
-      <form className="card" onSubmit={handleSubmit}>
-        <h1>MerqonTrades</h1>
-        <p className="muted">Sign in to manage your inventory and sales</p>
+    <Box sx={{ minHeight: "100vh", display: "flex", alignItems: "center", justifyContent: "center", p: 2 }}>
+      <Paper component="form" onSubmit={handleSubmit} elevation={3} sx={{ p: 4, width: "100%", maxWidth: 400 }}>
+        <Typography variant="h4" color="primary" sx={{ fontWeight: 700 }}>
+          MerqonTrades
+        </Typography>
+        <Typography color="text.secondary" sx={{ mb: 2 }}>
+          Sign in to manage your inventory and sales
+        </Typography>
 
-        {error && <div className="error">{error}</div>}
+        {error && (
+          <Alert severity="error" sx={{ mb: 2 }}>
+            {error}
+          </Alert>
+        )}
 
-        <label>Email</label>
-        <input
+        <TextField
+          label="Email"
           type="email"
+          fullWidth
+          required
+          margin="normal"
           value={email}
           onChange={(e) => setEmail(e.target.value)}
-          required
         />
-
-        <label>Password</label>
-        <input
+        <TextField
+          label="Password"
           type="password"
+          fullWidth
+          required
+          margin="normal"
           value={password}
           onChange={(e) => setPassword(e.target.value)}
-          required
         />
-
-        <button type="submit" disabled={submitting}>
+        <Button type="submit" variant="contained" size="large" fullWidth disabled={submitting} sx={{ mt: 2 }}>
           {submitting ? "Signing in..." : "Sign in"}
-        </button>
-      </form>
-    </div>
+        </Button>
+      </Paper>
+    </Box>
   );
 }
