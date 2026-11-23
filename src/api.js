@@ -14,4 +14,17 @@ api.interceptors.request.use((config) => {
   return config;
 });
 
+// If the session is no longer valid, clear it and go back to the login page
+api.interceptors.response.use(
+  (response) => response,
+  (error) => {
+    const isLoginRequest = error.config?.url?.includes("/login");
+    if (error.response?.status === 401 && !isLoginRequest) {
+      localStorage.removeItem("token");
+      window.location.href = "/login";
+    }
+    return Promise.reject(error);
+  }
+);
+
 export default api;
