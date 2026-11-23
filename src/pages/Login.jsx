@@ -2,6 +2,7 @@ import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { Alert, Box, Button, Paper, TextField, Typography } from "@mui/material";
 import { useAuth } from "../auth/useAuth";
+import PasswordField from "../components/PasswordField";
 import { getErrorMessage } from "../utils";
 
 export default function Login() {
@@ -49,11 +50,10 @@ export default function Login() {
           required
           margin="normal"
           value={email}
-          onChange={(e) => setEmail(e.target.value)}
+          onChange={(e) => setEmail(e.target.value.toLowerCase().replace(/\s/g, ""))}
         />
-        <TextField
+        <PasswordField
           label="Password"
-          type="password"
           fullWidth
           required
           margin="normal"

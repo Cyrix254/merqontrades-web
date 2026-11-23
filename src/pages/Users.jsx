@@ -9,6 +9,7 @@ import EditIcon from "@mui/icons-material/Edit";
 import DeleteIcon from "@mui/icons-material/Delete";
 import api from "../api";
 import { useAuth } from "../auth/useAuth";
+import PasswordField from "../components/PasswordField";
 import { getErrorMessage } from "../utils";
 
 function UserDialog({ user, isSelf, onClose, onSaved }) {
@@ -24,6 +25,10 @@ function UserDialog({ user, isSelf, onClose, onSaved }) {
   const [saving, setSaving] = useState(false);
 
   const change = (field) => (e) => setForm({ ...form, [field]: e.target.value });
+
+  // Emails are always lowercase and have no spaces
+  const changeEmail = (e) =>
+    setForm({ ...form, email: e.target.value.toLowerCase().replace(/\s/g, "") });
 
   const valid =
     form.name.trim() !== "" &&
@@ -64,10 +69,17 @@ function UserDialog({ user, isSelf, onClose, onSaved }) {
         {error && <Alert severity="error" sx={{ mb: 1 }}>{error}</Alert>}
 
         <TextField label="Full name" fullWidth margin="dense" value={form.name} onChange={change("name")} />
-        <TextField label="Email" type="email" fullWidth margin="dense" value={form.email} onChange={change("email")} />
         <TextField
+          label="Email"
+          type="email"
+          fullWidth
+          margin="dense"
+          value={form.email}
+          onChange={changeEmail}
+          helperText="Emails are saved in lowercase"
+        />
+        <PasswordField
           label={isEdit ? "New password (leave blank to keep the current one)" : "Password"}
-          type="password"
           fullWidth
           margin="dense"
           value={form.password}
