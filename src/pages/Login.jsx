@@ -28,8 +28,28 @@ export default function Login() {
   };
 
   return (
-    <Box sx={{ minHeight: "100vh", display: "flex", alignItems: "center", justifyContent: "center", p: 2 }}>
-      <Paper component="form" onSubmit={handleSubmit} elevation={3} sx={{ p: 4, width: "100%", maxWidth: 400 }}>
+    <Box
+      sx={{
+        minHeight: "100vh",
+        display: "flex",
+        alignItems: "center",
+        justifyContent: "center",
+        p: 2,
+        bgcolor: "#1f3864", // shown if the image fails to load
+        // A dark layer over the photo keeps the card easy to read
+        backgroundImage:
+          "linear-gradient(rgba(15, 30, 60, 0.55), rgba(15, 30, 60, 0.55)), url(/login-bg.jpeg)",
+        backgroundSize: "cover",
+        backgroundPosition: "center",
+        backgroundRepeat: "no-repeat",
+      }}
+    >
+      <Paper
+        component="form"
+        onSubmit={handleSubmit}
+        elevation={8}
+        sx={{ p: 4, width: "100%", maxWidth: 400, bgcolor: "rgba(255, 255, 255, 0.96)" }}
+      >
         <Typography variant="h4" color="primary" sx={{ fontWeight: 700 }}>
           MerqonTrades
         </Typography>
